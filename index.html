@@ -52,9 +52,16 @@
         });
         renderer.setSize(SCENE_WIDTH, SCENE_HEIGHT);
         document.body.appendChild(renderer.domElement);
+
         const controls = new OrbitControls(camera, renderer.domElement);
-
-
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.005;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 2.0;
+        controls.minPolarAngle = Math.PI / 6;
+        controls.maxPolarAngle = 5 * Math.PI / 6;
 
         // Add friend
         const geometry = new THREE.BoxGeometry(3, 3, 3);
@@ -83,7 +90,7 @@
         // Animate
         function animate()
         {
-            //cube.rotation.y += 0.02;
+            //cube.rotation.y += 0.005;
             //cube.rotation.x += 0.02;
 
             controls.update();
