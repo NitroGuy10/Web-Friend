@@ -29,13 +29,14 @@
         {
             "imports": {
                 "three": "./three_js/three.module.js",
-                "orbitcontrols": "./three_js/OrbitControls.js"
+                "orbit_controls": "./three_js/OrbitControls.js"
             }
         }
     </script>
     <script type="module">
         import * as THREE from 'three';
-        import { OrbitControls } from 'orbitcontrols';
+        import { OrbitControls } from 'orbit_controls';
+        //import { OutlineEffect } from 'outline_effect';
 
         // Setup
         const SCENE_WIDTH = 500;
@@ -52,6 +53,11 @@
         });
         renderer.setSize(SCENE_WIDTH, SCENE_HEIGHT);
         document.body.appendChild(renderer.domElement);
+
+        /*const effect = new OutlineEffect(renderer, {
+            //defaultAlpha: 1.0,
+            defaultThickness: 0.01
+        });*/
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableZoom = false;
@@ -97,6 +103,7 @@
 
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
+            //effect.render(scene, camera);
         }
         animate();
     </script>
