@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web-Friend</title>
+    <title>Web-Friend Rounded</title>
 
     <style>
         body
@@ -29,14 +29,17 @@
         {
             "imports": {
                 "three": "./three_js/three.module.js",
-                "orbit_controls": "./three_js/OrbitControls.js"
+                "orbit_controls": "./three_js/OrbitControls.js",
+                "gltf_loader": "./three_js/GLTFLoader.js",
+                "outline_effect": "./three_js/OutlineEffect.js"
             }
         }
     </script>
     <script type="module">
         import * as THREE from 'three';
         import { OrbitControls } from 'orbit_controls';
-        //import { OutlineEffect } from 'outline_effect';
+        import { GLTFLoader } from 'gltf_loader';
+        import { OutlineEffect } from 'outline_effect';
 
         // Setup
         const SCENE_WIDTH = 500;
@@ -55,10 +58,10 @@
         renderer.setSize(SCENE_WIDTH, SCENE_HEIGHT);
         document.body.appendChild(renderer.domElement);
 
-        /*const effect = new OutlineEffect(renderer, {
+        const effect = new OutlineEffect(renderer, {
             //defaultAlpha: 1.0,
-            defaultThickness: 0.01
-        });*/
+            defaultThickness: 0.03
+        });
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableZoom = false;
@@ -71,27 +74,23 @@
         controls.maxPolarAngle = 5 * Math.PI / 6;
 
         // Add friend
-        const geometry = new THREE.BoxGeometry(3, 3, 3);
-        //const material = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-        const loader = new THREE.TextureLoader();
+        const loader = new GLTFLoader();
 
-        const materials = [
-            new THREE.MeshBasicMaterial({map: loader.load('textures/face1.png', (texture) => { texture.magFilter = THREE.NearestFilter; texture.minFilter = THREE.NearestFilter; })}),
-            new THREE.MeshBasicMaterial({map: loader.load('textures/face2.png', (texture) => { texture.magFilter = THREE.NearestFilter; texture.minFilter = THREE.NearestFilter; })}),
-            new THREE.MeshBasicMaterial({map: loader.load('textures/face3.png', (texture) => { texture.magFilter = THREE.NearestFilter; texture.minFilter = THREE.NearestFilter; })}),
-            new THREE.MeshBasicMaterial({map: loader.load('textures/face4.png', (texture) => { texture.magFilter = THREE.NearestFilter; texture.minFilter = THREE.NearestFilter; })}),
-            new THREE.MeshBasicMaterial({map: loader.load('textures/face5.png', (texture) => { texture.magFilter = THREE.NearestFilter; texture.minFilter = THREE.NearestFilter; })}),
-            new THREE.MeshBasicMaterial({map: loader.load('textures/face6.png', (texture) => { texture.magFilter = THREE.NearestFilter; texture.minFilter = THREE.NearestFilter; })}),
-        ];
-        //const cube = new THREE.Mesh(geometry, material);
-        const cube = new THREE.Mesh(geometry, materials);
-        scene.add(cube);
+        loader.load( './friend_rounded.glb', function ( gltf ) {
+
+            scene.add( gltf.scene );
+        
+        }, undefined, function ( error ) {
+        
+            console.error( error );
+        
+        } );
 
         // Add lighting
         const light = new THREE.AmbientLight(0xffffff, 1);
         scene.add(light);
 
-
+        
 
 
         // Animate
@@ -104,7 +103,7 @@
 
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
-            //effect.render(scene, camera);
+            effect.render(scene, camera);
         }
         animate();
     </script>
