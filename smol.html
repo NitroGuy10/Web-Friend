@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web-Friend Rounded</title>
+    <title>Web-Friend Smol Faces</title>
 
     <style>
         body
         {
             text-align: center;
-            background: linear-gradient(white, skyblue) no-repeat center center fixed;
+            background-color: #FCFAFB;
+            color: #1D336F;
         }
 
         canvas
         {
-            border: 3px dotted black;
+            border: 3px dotted #1D336F;
             margin-left: auto;
             margin-right: auto;
         }
@@ -52,15 +53,18 @@
         camera.position.z = CAMERA_DISTANCE;
         
         const renderer = new THREE.WebGLRenderer({
-            alpha: true,
             antialias: true
         });
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.setClearColor(0xFCFAFB, 1);
         renderer.setSize(SCENE_WIDTH, SCENE_HEIGHT);
         document.body.appendChild(renderer.domElement);
 
+        const outline_brightness_scalar = 0.3;
         const effect = new OutlineEffect(renderer, {
-            //defaultAlpha: 1.0,
-            defaultThickness: 0.03
+            defaultAlpha: 1.0,
+            defaultThickness: 0.03,
+            defaultColor: [ 20/255 * outline_brightness_scalar, 51/255 * outline_brightness_scalar, 180/255 * outline_brightness_scalar],
         });
 
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -76,7 +80,7 @@
         // Add friend
         const loader = new GLTFLoader();
 
-        loader.load( './models/friend_rounded.glb', function ( gltf ) {
+        loader.load( './models/friend_smol_faces_rounded.glb', function ( gltf ) {
 
             scene.add( gltf.scene );
         
