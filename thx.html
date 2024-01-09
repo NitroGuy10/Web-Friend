@@ -83,6 +83,7 @@
         loader.load( './models/thx_computer.glb', function ( gltf ) {
 
             scene.add( gltf.scene );
+            gltf.scene.scale.set(2, 2, 2);
         
         }, undefined, function ( error ) {
         
@@ -94,7 +95,7 @@
         const light = new THREE.AmbientLight(0xffffff, 1);
         scene.add(light);
 
-        const pointLight = new THREE.PointLight(0xffffff, 1);
+        const pointLight = new THREE.PointLight(0xffffff, 0.3);
         pointLight.position.set(0, 2, 0);
         scene.add(pointLight);
 
@@ -104,7 +105,7 @@
 
         const pointLight3 = new THREE.PointLight(0xffffff, 1);
         pointLight3.position.set(0, 0.5, -5);
-        scene.add(pointLight3);
+        //scene.add(pointLight3);
 
         
 
